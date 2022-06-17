@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="./css/calcio.css">
         <link rel="stylesheet" href="./css/navbar.css">
     </head>
-
     <body>
         <div class="split left">
             <div>
@@ -25,8 +24,26 @@
             </ul>
             </div>
             <div class="centered">
-                <h2>Jane Flex</h2>
-                <p>Some text.</p>
+            <?php 
+                include('../../backend/php/config.php');
+                session_start();
+                $resultset = array();
+                $sql = "SELECT * FROM game WHERE sport = 'calcio'";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $str = "
+                        <div class='match'>
+                            <a>".$row['team1']."</a> vs <a>".$row['team2']."</a>
+                            
+                        
+                        </div>";
+                        echo $str;
+                    }
+                } else {
+                    echo "0 results";
+                }
+            ?>
             </div>
     </div>
 
@@ -45,10 +62,6 @@
             <a id="total-amount">7</a>
         </div>
     </div>
-        <?php 
-        session_start();
-        #echo $_SESSION['username'];
-        ?>
 
     </body>
 </html>
