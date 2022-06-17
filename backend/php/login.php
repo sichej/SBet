@@ -2,29 +2,39 @@
 include('config.php');
 session_start();
 
-if(isset($_POST['submit']) && (trim($_POST['submit']) == "Login"))
-{ 
-  // controllo sui parametri di autenticazione inviati
-  if( !isset($_POST['username']) || $_POST['username']=="" )
-  {
-    echo "Attenzione, inserire l'username.";
-  }
-  elseif( !isset($_POST['password']) || $_POST['password'] =="")
-  {
-    echo "Attenzione, inserire la password.";
-  }else{
-    // validazione dei parametri tramite filtro per le stringhe
-    $username = trim(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
-    $password = trim(filter_var($_POST['password'], FILTER_SANITIZE_STRING));
+# Check if user is logged in
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+    header('Location: ../../frontend/www/index.php');
+    exit;
+}
+
+# Check if user is trying to log in
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
     $password = md5($password);
 
-    if ($result = $conn -> query("SELECT * FROM user WHERE username = '$username' AND password = '$password'")) {
-        echo "Returned rows are: " . $result -> num_rows;
-        // Free result set
-        $result -> free_result();
-        echo $result;
-      }
-  }
+    # Check if user exists
+    $sql = "SELECT * FROM user WHERE username = '$username'";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $hash = $row['password'];
+
+        if ($password == $hash) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $username;
+            header('Location: ../../frontend/www/index.php');
+            exit;
+        } else {
+            echo "Incorrect password";
+        }
+    } else {
+        echo "User not found";
+    }
 }
+
 
 ?>
