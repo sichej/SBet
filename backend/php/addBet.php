@@ -2,20 +2,25 @@
 include('../../backend/php/config.php');
 session_start();
 
+if(!isset($_SESSION['betted_games'])){
+    $_SESSION['betted_games'] = array();
+}
+
 if (isset($_POST['id_game']) && isset($_POST['result'])) {
     $id_game = $_POST['id_game'];
-    $result = $_POST['result'];
+    $m_result = $_POST['result'];
 
     #check if game actually exist
     $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         # if match exists
-        $game[] = array($id_game, $result);
-        array_push($_SESSION['betted_games'], $game);
-        header('Location: ../../frontend/www/index.php');
+        #array_push($_SESSION['betted_games'], $id_game);
+        array_push($_SESSION['betted_games'], $id_game);
+        array_push($_SESSION['betted_games'], $m_result);
+        header('Location: ../../frontend/www/calcio.php');
     }else{
-        # id doesn't exist
+        # if doesn't exist
         header('Location: ../../frontend/www/basket.php');
     }
 
