@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+include('../../backend/php/checkLogin.php');
+?>
 <html>
     <head>
         <title>Calcio</title>
@@ -66,21 +69,39 @@
         </div>
         <div class="centered">
             <?php
-            for ($i = 0; $i <= count($_SESSION['betted_games']); $i++) {
+            for ($i = 0; $i <= count($_SESSION['betted_games']); $i = $i+2) {
+                $id_game = $_SESSION['betted_games'][$i];
+                $quote = $_SESSION['betted_games'][$i+1];
                 $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
                 $result = $conn->query($sql);
-                $strBet = "
-                <div class='match'>
-                            <a>".$row['team1']."</a> vs <a>".$row['team2']."</a><br>
-                            <a>Bet: 
-                </div>";
-                echo $strBet;
+                if ($result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        # check if game's quote exists
+                        $id_game = $row['id_game'];
+                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
+                        $resultQuote = $conn->query($sql);
+                        $quotes = $resultQuote->fetch_assoc();
+                        # total quote
+                        /*
+                        for($j = 0; $j < count($quotes); $j++){
+                            if($quotes[$j] != 0)
+                                $_SESSION['total_quote'] *= $quotes[$j];
+                        }*/
+                        $str = "
+                        <div class='match'>
+                            <a class='games-names'>".$row['team1']."</a> vs <a class='games-names'>".$row['team2']."</a><br>
+                            <a>betted: ". $quote . " quote: " .$quotes[$quote]."</a>
+                        </div>";
+                        # show on the screen all the matches (games)
+                        echo $str;
+                    }
+                }
             }
             ?>
         </div>
         <div class="bet-footer">
             <a>quote: </a> 
-            <a id="total-quote">7</a><br>
+            <a id="total-quote"><?php echo round($_SESSION['total_quote'],2) ?></a><br>
             <a>amout: </a> 
             <a id="total-amount">7</a>
         </div>
