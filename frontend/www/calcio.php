@@ -67,7 +67,7 @@
         <div class="centered">
             <?php
             for ($i = 0; $i <= count($_SESSION['betted_games']); $i++) {
-                echo $_SESSION['betted_games']['id_game'];
+                echo $_SESSION['betted_games'];
             }
             ?>
         </div>
