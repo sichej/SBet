@@ -56,4 +56,9 @@ body{
     border-style:solid;
     border-color:black;
     margin: 10px;
+    width: '300px'; /* not working */
+    }
+
+    .games-names{
+      font-weight: bold;
     }
