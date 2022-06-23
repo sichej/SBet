@@ -67,7 +67,14 @@
         <div class="centered">
             <?php
             for ($i = 0; $i <= count($_SESSION['betted_games']); $i++) {
-                echo $_SESSION['betted_games'];
+                $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
+                $result = $conn->query($sql);
+                $strBet = "
+                <div class='match'>
+                            <a>".$row['team1']."</a> vs <a>".$row['team2']."</a><br>
+                            <a>Bet: 
+                </div>";
+                echo $strBet;
             }
             ?>
         </div>
