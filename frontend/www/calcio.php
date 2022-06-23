@@ -98,7 +98,7 @@ include('../../backend/php/checkLogin.php');
             <a id="total-quote"><?php echo round($_SESSION['total_quote'],2) ?></a><br>
             <form action="" method="POST">
                 <a>amout: </a> 
-                <input type="number" name="totalAmount" class="total-amount">
+                <input type="number" name="total_amount" class="total-amount">
                 <input type="submit" value="Bet">
             </form>
         </div>
