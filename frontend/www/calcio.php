@@ -81,12 +81,6 @@ include('../../backend/php/checkLogin.php');
                         $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
                         $resultQuote = $conn->query($sql);
                         $quotes = $resultQuote->fetch_assoc();
-                        # total quote
-                        /*
-                        for($j = 0; $j < count($quotes); $j++){
-                            if($quotes[$j] != 0)
-                                $_SESSION['total_quote'] *= $quotes[$j];
-                        }*/
                         $str = "
                         <div class='match'>
                             <a class='games-names'>".$row['team1']."</a> vs <a class='games-names'>".$row['team2']."</a><br>
@@ -102,8 +96,11 @@ include('../../backend/php/checkLogin.php');
         <div class="bet-footer">
             <a>quote: </a> 
             <a id="total-quote"><?php echo round($_SESSION['total_quote'],2) ?></a><br>
-            <a>amout: </a> 
-            <a id="total-amount">7</a>
+            <form action="" method="POST">
+                <a>amout: </a> 
+                <input type="number" name="totalAmount" class="total-amount">
+                <input type="submit" value="Bet">
+            </form>
         </div>
     </div>
 
