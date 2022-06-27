@@ -28,16 +28,16 @@ if (isset($_POST['id_game']) && isset($_POST['result'])) {
             $row = $result->fetch_assoc();
             $_SESSION['total_quote'] *= $row[$m_result];
      
-            header('Location: ../../frontend/www/calcio.php');
+            header('Location: ../../frontend/www/'.$_SESSION['current_page']);
         }
-        header('Location: ../../frontend/www/calcio.php');
+        header('Location: ../../frontend/www/'.$_SESSION['current_page']);
     }else{
         # if doesn't exist
-        header('Location: ../../frontend/www/basket.php');
+        header('Location: ../../frontend/www/'.$_SESSION['current_page']);
     }
 
 }else{
-    header('Location: ../../frontend/www/volleyball.php');
+    header('Location: ../../frontend/www/'.$_SESSION['current_page']);
 }
 
 ?>
