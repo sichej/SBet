@@ -17,7 +17,7 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/script.js"></script>
-        <link rel="stylesheet" href="./css/baseball.css">
+        <link rel="stylesheet" href="./css/calcio.css">
         <link rel="stylesheet" href="./css/navbar.css">
         <link rel="stylesheet" href="./css/btn.css">
     </head>
@@ -28,35 +28,23 @@
                 <li><a href="./index.php">Home</a></li>
                 <li><a href="./calcio.php">Calcio</a></li>
                 <li><a href="./basket.php">Basket</a></li>
-                <li><a class="active" href="./baseball.php">Baseball</a></li>
+                <li><a href="./baseball.php">Baseball</a></li>
                 <li><a href="./volleyball.php">volleyball</a></li>
-                <li><a href="./mybet.php">My Bets</a></li>
+                <li><a class="active" href="./mybet.php">My Bets</a></li>
             </ul>
             </div>
             <div class="centered">
             <?php 
                 include('../../backend/php/config.php');
                 session_start();
-                $sql = "SELECT * FROM game WHERE sport = 'baseball'";
+                $username = $_SESSION['username'];
+                $sql = "SELECT * FROM bet_user WHERE username = '$username'";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        # check if game's quote exists
-                        $id_game= $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
-                        # if not exit
-                        if($resultQuote->num_rows != 1)
-                            exit;
-                        $quotes = $resultQuote->fetch_assoc();
                         $str = "
                         <div class='match'>
-                        <form method='POST' action='../../backend/php/addBet.php'>
-                            <a>".$row['team1']."</a> vs <a>".$row['team2']."</a><br>
-                            <input name='id_game' value=".$id_game." type='hidden'>
-                            <input class='btn-result' type='submit' name='result' value='1'><a>".$quotes['1']."</a>
-                            <input class='btn-result' type='submit' name='result' value='2'><a>".$quotes['2']."</a>
-                        </form>
+                            <a>".$row['id_bet']."</a>
                         </div>";
                         # show on the screen all the matches (games)
                         echo $str;

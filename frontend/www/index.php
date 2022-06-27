@@ -30,6 +30,7 @@
                 <li><a href="./basket.php">Basket</a></li>
                 <li><a href="./baseball.php">Baseball</a></li>
                 <li><a href="./volleyball.php">volleyball</a></li>
+                <li><a href="./mybet.php">My Bets</a></li>
             </ul>
             </div>
             <div class="centered">
