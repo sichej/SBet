@@ -58,7 +58,6 @@ if (isset($_POST['total_amount'])) {
                 $conn->query($sql);
             }
 
-
             # update money on user profile
             $updated_money = $money - $total_amount;
             $sql = "UPDATE user SET money = ' $updated_money' WHERE username = '$username'";
