@@ -2,9 +2,9 @@
 include('../../backend/php/config.php');
 session_start();
 
-if(!isset($_SESSION['view_bet'])){
-    $_SESSION['view_bet'] = array();
-}
+
+$_SESSION['view_bet'] = array();
+
 
 if (isset($_POST['id_bet'])) {
     $id_bet = $_POST['id_bet'];
