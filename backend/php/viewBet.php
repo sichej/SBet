@@ -2,7 +2,6 @@
 include('../../backend/php/config.php');
 session_start();
 
-
 $_SESSION['view_bet'] = array();
 
 
