@@ -46,11 +46,20 @@ if (isset($_POST['total_amount'])) {
         # insert link bet to user
         $sql = "INSERT INTO bet_user (id_bet, username) VALUES ('$id_bet', '$username')";
         if ($conn->query($sql) === TRUE){
+
+            # link id_bet to id_game
+            for ($k = 0; $k < count($_SESSION['betted_games']); $k += 2){
+                $id_betted = $_SESSION['betted_games'][$k];
+                $sql = "INSERT INTO bet_game (id_game, id_bet) VALUES ('$id_betted', '$id_bet')";
+                $conn->query($sql);
+            }
+
+
             # update money on user profile
             $updated_money = $money - $total_amount;
             $sql = "UPDATE user SET money = ' $updated_money' WHERE username = '$username'";
             if ($conn->query($sql) === TRUE){
-                $_SESSION['total_quote'] = 0;
+                $_SESSION['total_quote'] = 1;
                 $_SESSION['betted_games'] = array();
                 header('Location: ../../frontend/www/index.php');
             }
