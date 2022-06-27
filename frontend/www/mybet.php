@@ -45,8 +45,12 @@
                     while($row = $result->fetch_assoc()) {
                         $str = "
                         <div class='match'>
-                            <a>".$row['id_bet']."</a><br>
-                            <a>Quote: ".$row['total_quote']."</a>
+                            <form method='POST' action='../../backend/php/viewBet.php'>
+                                <a> ".$row['id_bet']." </a><br>
+                                <input name='id_bet' value=".$row['id_bet']." type='hidden'>
+                                <a> Quote: ".$row['total_quote']." </a>
+                                <input type='submit' name='submit' value='view bet'>
+                            </form>
                         </div>";
                         # show on the screen all the matches (games)
                         echo $str;
@@ -64,7 +68,7 @@
         </div>
         <div class="centered">
             <?php
-            for ($i = 0; $i <= count($_SESSION['betted_games']); $i = $i+2) {
+            for ($i = 0; $i <= count($_SESSION['view_bet']); $i = $i+2) {
                 $id_game = $_SESSION['betted_games'][$i];
                 $quote = $_SESSION['betted_games'][$i+1];
                 $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
@@ -81,7 +85,7 @@
                             <a class='games-names'>".$row['team1']."</a> vs <a class='games-names'>".$row['team2']."</a><br>
                             <a>betted: ". $quote . " quote: " .$quotes[$quote]."</a>
                         </div>";
-                        # show on the screen all the matches (games)
+                        # show on the screen all the bets (games)
                         echo $str;
                     }
                 }
