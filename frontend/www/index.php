@@ -33,7 +33,7 @@
             </ul>
             </div>
             <div class="centered">
-            
+                <a href="../../backend/php/logout.php">Log Out Btn</a>
             </div>
     </div>
 
