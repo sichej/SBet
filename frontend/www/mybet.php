@@ -69,21 +69,16 @@
         <div class="centered">
             <?php
             for ($i = 0; $i <= count($_SESSION['view_bet']); $i = $i+2) {
-                $id_game = $_SESSION['betted_games'][$i];
-                $quote = $_SESSION['betted_games'][$i+1];
-                $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
+                $id_game = $_SESSION['view_bet'][$i];
+                $betted_result = $_SESSION['view_bet'][$i+1];
+                $sql = "SELECT team1, team2 FROM game WHERE id_game = '$id_game'";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        # check if game's quote exists
-                        $id_game = $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
-                        $quotes = $resultQuote->fetch_assoc();
                         $str = "
                         <div class='match'>
                             <a class='games-names'>".$row['team1']."</a> vs <a class='games-names'>".$row['team2']."</a><br>
-                            <a>betted: ". $quote . " quote: " .$quotes[$quote]."</a>
+                            <a>betted: ". $betted_result . "</a>
                         </div>";
                         # show on the screen all the bets (games)
                         echo $str;
@@ -93,15 +88,6 @@
             ?>
         </div>
         <div class="bet-footer">
-            <a>quote: </a> 
-            <a id="total-quote"><?php echo round($_SESSION['total_quote'],2) ?></a><br>
-            <!-- betting -->
-            <form action="../../backend/php/bet.php" method="POST">
-                <a>amout: </a> 
-                <input type="number" name="total_amount" class="total-amount">
-                <input type="submit" value="Bet">
-            </form>
-            <!-- -->
         </div>
     </div>
 
