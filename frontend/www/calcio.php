@@ -96,11 +96,13 @@ include('../../backend/php/checkLogin.php');
         <div class="bet-footer">
             <a>quote: </a> 
             <a id="total-quote"><?php echo round($_SESSION['total_quote'],2) ?></a><br>
-            <form action="" method="POST">
+            <!-- betting -->
+            <form action="../../backend/php/bet.php" method="POST">
                 <a>amout: </a> 
                 <input type="number" name="total_amount" class="total-amount">
                 <input type="submit" value="Bet">
             </form>
+            <!-- -->
         </div>
     </div>
 
