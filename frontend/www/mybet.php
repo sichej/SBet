@@ -38,13 +38,15 @@
                 include('../../backend/php/config.php');
                 session_start();
                 $username = $_SESSION['username'];
-                $sql = "SELECT * FROM bet_user WHERE username = '$username'";
+                #$sql = "SELECT * FROM bet_user WHERE username = '$username'";
+                $sql = "SELECT bet.id_bet, bet.total_quote FROM bet JOIN bet_user ON bet.id_bet = bet_user.id_bet WHERE bet_user.username = '$username'";
                 $result = $conn->query($sql);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         $str = "
                         <div class='match'>
-                            <a>".$row['id_bet']."</a>
+                            <a>".$row['id_bet']."</a><br>
+                            <a>Quote: ".$row['total_quote']."</a>
                         </div>";
                         # show on the screen all the matches (games)
                         echo $str;
