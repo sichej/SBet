@@ -47,10 +47,14 @@ if (isset($_POST['total_amount'])) {
         $sql = "INSERT INTO bet_user (id_bet, username) VALUES ('$id_bet', '$username')";
         if ($conn->query($sql) === TRUE){
 
-            # link id_bet to id_game
+            # link id_bet to id_game id_single_game
             for ($k = 0; $k < count($_SESSION['betted_games']); $k += 2){
                 $id_betted = $_SESSION['betted_games'][$k];
-                $sql = "INSERT INTO bet_game (id_game, id_bet) VALUES ('$id_betted', '$id_bet')";
+                $betted_result = $_SESSION['betted_games'][$k+1];
+                $id_single_bet = generateRandomString(16);
+                $sql = "INSERT INTO bet_game (id_single_bet, id_bet) VALUES ('$id_single_bet', '$id_bet')";
+                $conn->query($sql);
+                $sql = "INSERT INTO bet_single_game (id_game, betted_result ,id_single_bet) VALUES ('$id_betted', '$betted_result', '$id_single_bet')";
                 $conn->query($sql);
             }
 
