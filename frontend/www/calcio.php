@@ -43,7 +43,7 @@
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
-                        $id_game= $row['id_game'];
+                        $id_game = $row['id_game'];
                         $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
                         $resultQuote = $conn->query($sql);
                         # if not exit
