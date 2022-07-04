@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <?php 
+    include('../../backend/php/config.php');
     session_start();
     # Check if user is logged in
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
@@ -35,6 +36,16 @@
             </div>
             <div class="centered">
                 <a href="../../backend/php/logout.php">Log Out Btn</a>
+                <?php
+                    $username = $_SESSION['username'];
+                    $sql = "SELECT * FROM user WHERE username = '$username'";
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<br><a>money: ".$row['money']."</a>";
+                        }
+                    }
+                ?>
             </div>
     </div>
 
