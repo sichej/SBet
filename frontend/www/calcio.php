@@ -55,9 +55,9 @@
                         <form method='POST' action='../../backend/php/addBet.php'>
                             <a>".$row['team1']."</a> vs <a>".$row['team2']."</a><br>
                             <input name='id_game' value=".$id_game." type='hidden'>
-                            <input class='btn-result' type='submit' name='result' value='1'><a>".$quotes['1']."</a>
+                            <input class='btn-result' type='submit' name='result' value='1'><a>".$quotes['one']."</a>
                             <input class='btn-result' type='submit' name='result' value='x'><a>".$quotes['x']."</a>
-                            <input class='btn-result' type='submit' name='result' value='2'><a>".$quotes['2']."</a>
+                            <input class='btn-result' type='submit' name='result' value='2'><a>".$quotes['two']."</a>
                         </form>
                         </div>";
                         # show on the screen all the matches (games)
