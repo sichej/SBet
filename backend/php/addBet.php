@@ -13,6 +13,8 @@ if(!isset($_SESSION['total_quote'])){
 if (isset($_POST['id_game']) && isset($_POST['result'])) {
     $id_game = $_POST['id_game'];
     $m_result = $_POST['result'];
+    if($m_result == 1) $m_result = "one";
+    if($m_result == 2) $m_result = "two";
 
     #check if game actually exist
     $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
