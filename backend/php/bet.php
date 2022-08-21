@@ -17,7 +17,6 @@ if (isset($_POST['total_amount'])) {
     $total_amount = $_POST['total_amount'];
     $username = $_SESSION['username'];
     $money = 0;
-    echo $total_amount;
     
     #check amount betted is regular
     if ($total_amount < 2) exit;
@@ -35,6 +34,7 @@ if (isset($_POST['total_amount'])) {
             if ($money < $total_amount){
                 # not enough money
                 header('Location: ../../frontend/www/index.php');
+                exit;
             }
         }
     }
