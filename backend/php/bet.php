@@ -51,6 +51,8 @@ if (isset($_POST['total_amount'])) {
             for ($k = 0; $k < count($_SESSION['betted_games']); $k += 2){
                 $id_betted = $_SESSION['betted_games'][$k];
                 $betted_result = $_SESSION['betted_games'][$k+1];
+                if($betted_result == "one") $betted_result = 1;
+                if($betted_result == "two") $betted_result = 2;
                 $id_single_bet = generateRandomString(16);
                 $sql = "INSERT INTO bet_game (id_single_bet, id_bet) VALUES ('$id_single_bet', '$id_bet')";
                 $conn->query($sql);
