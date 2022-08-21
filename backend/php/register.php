@@ -25,7 +25,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $hash = md5($password);
 
         # Insert user into database
-        $sql = "INSERT INTO user (username, password) VALUES ('$username', '$hash')";
+        $sql = "INSERT INTO user (username, password, money) VALUES ('$username', '$hash', 100)";
 
         if ($conn->query($sql) === TRUE) {
             echo "User created successfully";
