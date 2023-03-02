@@ -44,8 +44,9 @@
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
                         $id_game = $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
+                        // $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
+                        // $resultQuote = $conn->query($sql);
+                        $resultQuote = $conn->execute_query("SELECT * FROM quote WHERE id_game = ?", [$id_game]);
                         # if not exit
                         if($resultQuote->num_rows != 1)
                             exit;
@@ -79,14 +80,14 @@
             for ($i = 0; $i <= count($_SESSION['betted_games']); $i = $i+2) {
                 $id_game = $_SESSION['betted_games'][$i];
                 $quote = $_SESSION['betted_games'][$i+1];
-                $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
-                $result = $conn->query($sql);
+                // $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
+                $result = $conn->execute_query("SELECT * FROM game WHERE id_game = ?", [$id_game]);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
                         $id_game = $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
+                        // $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
+                        $resultQuote = $conn->execute_query("SELECT * FROM quote WHERE id_game = ?", [$id_game]);
                         $quotes = $resultQuote->fetch_assoc();
                         $str = "
                         <div class='match'>
