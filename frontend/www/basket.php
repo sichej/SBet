@@ -44,8 +44,7 @@
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
                         $id_game= $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
+                        $resultQuote = $conn->execute_query("SELECT * FROM quote WHERE id_game = ?", [$id_game]);
                         # if not exit
                         if($resultQuote->num_rows != 1)
                             exit;
@@ -84,8 +83,7 @@
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
                         $id_game = $row['id_game'];
-                        $sql = "SELECT * FROM quote WHERE id_game = '$id_game'";
-                        $resultQuote = $conn->query($sql);
+                        $resultQuote = $conn->execute_query("SELECT * FROM quote WHERE id_game = ?", [$id_game]);
                         $quotes = $resultQuote->fetch_assoc();
                         $str = "
                         <div class='match'>
