@@ -26,8 +26,7 @@ if (isset($_POST['total_amount'])) {
     $total_quote = round($_SESSION['total_quote'],2);
 
     # check if user's money are enought for the bet
-    $sql = "SELECT money FROM user WHERE username = '$username'";
-    $result = $conn->query($sql);
+    $result = $conn->execute_query("SELECT money FROM user WHERE username = ?", [$username]);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $money = $row['money'];
@@ -40,12 +39,10 @@ if (isset($_POST['total_amount'])) {
     }
 
     # insert bet into db
-    $sql = "INSERT INTO bet (id_bet, total_quote, amount_betted) VALUES ('$id_bet', '$total_quote', '$total_amount')";
-    if ($conn->query($sql) === TRUE) {
+    if ($conn->execute_query("INSERT INTO bet (id_bet, total_quote, amount_betted) VALUES (?,?,?)", [$id_bet],[$total_quote],[$total_amount]) === TRUE) {
         echo "Betted";
         # insert link bet to user
-        $sql = "INSERT INTO bet_user (id_bet, username) VALUES ('$id_bet', '$username')";
-        if ($conn->query($sql) === TRUE){
+        if ($conn->execute_query("INSERT INTO bet_user (id_bet, username) VALUES (?,?)", [$id_bet], [$username]) === TRUE){
 
             # link id_bet to id_game id_single_game
             for ($k = 0; $k < count($_SESSION['betted_games']); $k += 2){
@@ -54,16 +51,14 @@ if (isset($_POST['total_amount'])) {
                 if($betted_result == "one") $betted_result = 1;
                 if($betted_result == "two") $betted_result = 2;
                 $id_single_bet = generateRandomString(16);
-                $sql = "INSERT INTO bet_game (id_single_bet, id_bet) VALUES ('$id_single_bet', '$id_bet')";
-                $conn->query($sql);
-                $sql = "INSERT INTO bet_single_game (id_game, betted_result ,id_single_bet) VALUES ('$id_betted', '$betted_result', '$id_single_bet')";
-                $conn->query($sql);
+                $conn->execute_query("INSERT INTO bet_game (id_single_bet, id_bet) VALUES (?,?)", [$id_single_bet], [$id_bet]);
+                $conn->execute_query("INSERT INTO bet_single_game (id_game, betted_result ,id_single_bet) VALUES (?,?,?)", [$id_betted], [$betted_result], [$id_single_bet]);
             }
 
             # update money on user profile
             $updated_money = $money - $total_amount;
             $sql = "UPDATE user SET money = ' $updated_money' WHERE username = '$username'";
-            if ($conn->query($sql) === TRUE){
+            if ($conn->execute_query("UPDATE user SET money = ? WHERE username = ?", [$updated_money], [$username]) === TRUE){
                 $_SESSION['total_quote'] = 1;
                 $_SESSION['betted_games'] = array();
                 header('Location: ../../frontend/www/index.php');
