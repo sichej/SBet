@@ -77,8 +77,7 @@
             for ($i = 0; $i <= count($_SESSION['betted_games']); $i = $i+2) {
                 $id_game = $_SESSION['betted_games'][$i];
                 $quote = $_SESSION['betted_games'][$i+1];
-                $sql = "SELECT * FROM game WHERE id_game = '$id_game'";
-                $result = $conn->query($sql);
+                $result = $conn->execute_query("SELECT * FROM quote WHERE id_game = ?", [$id_game]);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         # check if game's quote exists
