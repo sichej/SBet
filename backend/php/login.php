@@ -15,9 +15,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = md5($password);
 
     # Check if user exists
-    $sql = "SELECT * FROM user WHERE username = '$username'";
-
-    $result = $conn->query($sql);
+    $result = $conn->execute_query("SELECT * FROM user WHERE username = ?", [$username]);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();

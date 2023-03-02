@@ -14,9 +14,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = $_POST['password'];
 
     # Check if user exists
-    $sql = "SELECT * FROM user WHERE username = '$username'";
-
-    $result = $conn->query($sql);
+    $result = $conn->execute_query("SELECT * FROM user WHERE username = ?", [$username]);
 
     if ($result->num_rows > 0) {
         echo "User already exists";
@@ -25,9 +23,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $hash = md5($password);
 
         # Insert user into database
-        $sql = "INSERT INTO user (username, password, money) VALUES ('$username', '$hash', 100)";
-
-        if ($conn->query($sql) === TRUE) {
+        if ($conn->execute_query("INSERT INTO user (username, password, money) VALUES (?,?,?)", [$username], [$hash], 100) === TRUE) {
             echo "User created successfully";
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
