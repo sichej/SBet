@@ -38,9 +38,7 @@
                 include('../../backend/php/config.php');
                 session_start();
                 $username = $_SESSION['username'];
-                #$sql = "SELECT * FROM bet_user WHERE username = '$username'";
-                $sql = "SELECT bet.id_bet, bet.total_quote FROM bet JOIN bet_user ON bet.id_bet = bet_user.id_bet WHERE bet_user.username = '$username'";
-                $result = $conn->query($sql);
+                $result = $conn->execute_query("SELECT bet.id_bet, bet.total_quote FROM bet JOIN bet_user ON bet.id_bet = bet_user.id_bet WHERE bet_user.username = ?", [$username]);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         $str = "
@@ -71,8 +69,7 @@
             for ($i = 0; $i <= count($_SESSION['view_bet']); $i = $i+2) {
                 $id_game = $_SESSION['view_bet'][$i];
                 $betted_result = $_SESSION['view_bet'][$i+1];
-                $sql = "SELECT team1, team2 FROM game WHERE id_game = '$id_game'";
-                $result = $conn->query($sql);
+                $result = $conn->execute_query("SELECT team1, team2 FROM game WHERE id_game = ?", [$id_game]);
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
                         $str = "
